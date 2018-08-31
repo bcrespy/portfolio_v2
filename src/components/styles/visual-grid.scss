@@ -1,0 +1,12 @@
+.visual-grid {
+  display: grid;
+  border: 1px solid rgb(255,0,255);
+  border-top-width: 2px;
+  border-left-width: 2px;
+
+  .grid-item {
+    border: 1px solid rgb(255,0,255);
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+  }
+}

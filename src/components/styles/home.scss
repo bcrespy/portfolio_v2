@@ -1,0 +1,79 @@
+.home {
+  .gradient {
+    width: 235px;
+    height: 25px;
+    background: url('../../img/gradient.png');
+    mix-blend-mode: color-dodge;
+    opacity: 1;
+  }
+
+  .infos {
+    position: absolute;
+    bottom: 100px;
+    left: 100px;
+
+    h1 {
+      margin: 0;
+      font-weight: bold;
+      font-size: 36px;
+      line-height: 45px;
+      //mix-blend-mode: color-dodge;
+    }
+
+    .gradient {
+      margin-top: 15px;
+    }
+
+    .and {
+      position: absolute;
+      bottom: 66px;
+      left: -70px;
+      color: #ff00ff;
+      font-size: 80px;
+      line-height: 0;
+      font-weight: bold;
+      mix-blend-mode: color-dodge;
+    }
+  }
+
+  .my-work {
+    position: absolute;
+    bottom: 100px; right: 100px;
+    perspective: 800px; 
+    width: 250px;
+
+    .visual-grid {
+      float: right;
+      position: relative;
+      transition: bottom 0.5s, right 0.5s;
+      bottom: 0; right: 0;
+    }
+
+    .work-link {
+      position: absolute;
+      bottom: 68px; right: 75px;
+      color: white;
+      text-decoration: none;
+      font-size: 30px;
+      font-weight: bold;
+      transition: all 0.5s;
+    }
+
+    &:hover {
+      .visual-grid {
+        bottom: -10px; 
+        right: -10px;
+      }
+
+      .work-link {
+        bottom: 78px;
+        right: 85px;
+      }
+    }
+  }
+
+  .visual-grid {
+    height: 150px;
+    width: 150px;
+  }
+}

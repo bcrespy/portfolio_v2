@@ -1,0 +1,63 @@
+header {
+  width: 100%;
+  position: fixed;
+  top: 0; left: 0;
+  text-align: right;
+  padding-top: 50px;
+
+  ul, li {
+    padding: 0;
+    margin: 0;
+  }
+
+  ul {
+    display: inline-block;
+    margin-right: 50px;
+
+    li {
+      list-style: none;
+      display: inline-block;
+
+      a {
+        padding: 7px 10px;
+        margin: 0 5px;
+        text-shadow: none;
+        color: #ffffff;
+        text-decoration: none;
+
+        &:hover {
+          animation: shadow-slide 2s ease-out 0s 1 forwards;
+        }
+      }
+
+      &:nth-child(2n+1) a:hover {
+        animation-name: shadow-slide-left;
+      }
+    }
+  }
+}
+
+
+@keyframes shadow-slide {
+  0% {
+    text-shadow: 0px 0px 0px rgb(255, 0, 255);
+  }
+  60% {
+    text-shadow: 10px 10px 0px rgb(255, 0, 255);
+  }
+  100% {
+    text-shadow: 2500px 2500px 0px rgb(255, 0, 255);
+  }
+}
+
+@keyframes shadow-slide-left {
+  0% {
+    text-shadow: 0px 0px 0px rgb(255, 0, 255);
+  }
+  60% {
+    text-shadow: -10px 10px 0px rgb(255, 0, 255);
+  }
+  100% {
+    text-shadow: -2500px 2500px 0px rgb(255, 0, 255);
+  }
+}
