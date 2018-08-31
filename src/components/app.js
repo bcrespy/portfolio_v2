@@ -9,6 +9,7 @@ import Playground from './playground/index';
 
 // routing 
 import { Route, Switch } from 'react-router';
+import { spring, AnimatedRoute } from 'react-router-transition';
 
 
 

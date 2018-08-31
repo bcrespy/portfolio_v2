@@ -18,3 +18,8 @@ body {
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently */
 }
+
+.background-canvas {
+  position: absolute;
+  top: 0; left: 0;
+}
