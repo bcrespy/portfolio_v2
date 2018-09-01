@@ -13,15 +13,40 @@ const config = {
 
 firebase.initializeApp(config);
 
-var db = firebase.firestore();
+const db = firebase.firestore();
 const settings = { timestampsInSnapshots: true };
 db.settings(settings);
 
 
-let playground = db.collection('playgrounds');
+const playground = db.collection('playgrounds');
 
-playground.get().then( querySnapshot => {
+/*playground.get().then( querySnapshot => {
   querySnapshot.forEach( document => {
     console.log( document, document.data() );
   })
-})
+})*/
+
+
+const getPlayground = function() {
+  return new Promise( (resolve, reject) => {
+    playground.get().then(querySnapshot => {
+        
+        let payload = [];
+
+        querySnapshot.forEach( document => {
+          payload.push({
+            ...document.data(),
+            id: document.id
+          });
+        });
+
+        resolve(payload);
+        
+    }).catch(reject);
+  });
+}
+
+
+export default {
+  getPlayground
+};

@@ -9,7 +9,8 @@ import Playground from './playground/index';
 
 // routing 
 import { Route, Switch } from 'react-router';
-import { spring, AnimatedRoute } from 'react-router-transition';
+import { spring, AnimatedSwitch } from 'react-router-transition';
+import RouterAnimations from './router-animations';
 
 
 
@@ -18,12 +19,20 @@ class App extends Component {
     return (
       <div className="main-container">
         <Header/>
-        <Switch>
+
+        <AnimatedSwitch
+          atEnter={RouterAnimations.bounceTransition.atEnter}
+          atLeave={RouterAnimations.bounceTransition.atLeave}
+          atActive={RouterAnimations.bounceTransition.atActive}
+          mapStyles={RouterAnimations.mapStyles}
+          className="route-wrapper"
+        >          
           <Route exact path="/" component={Home}/>
           <Route path="/home" component={Home}/>
           <Route path="/playground" component={Playground}/>
           <Route component={Home}/>
-        </Switch>
+        </AnimatedSwitch>
+        
       </div>
     );
   }

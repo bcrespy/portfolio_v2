@@ -8,10 +8,14 @@ import registerServiceWorker from './registerServiceWorker';
 import { Route } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 
+// redux
+import { Provider } from 'react-redux';
+import store from './store';
+
 import { Grid } from './background/grid';
 import { GridDrawer } from './background/grid-drawer';
 
-import './services/firebase';
+import service from './services/firebase';
 
 
 
@@ -47,9 +51,11 @@ function draw()
 
 
 ReactDOM.render((
-  <BrowserRouter>
-    <Route path='/' component={App}/>
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <Route path='/' component={App}/>
+    </BrowserRouter>
+  </Provider>
 ), document.getElementById('root'));
 
 registerServiceWorker();

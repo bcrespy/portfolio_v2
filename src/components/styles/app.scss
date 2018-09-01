@@ -1,5 +1,5 @@
 body {
-
+  overflow: hidden;
 }
 
 .main-container {
@@ -22,4 +22,16 @@ body {
 .background-canvas {
   position: absolute;
   top: 0; left: 0;
+}
+
+.route-wrapper {
+  position: relative;
+  width: 100%;
+
+  & > div {
+    position: absolute;
+    left: 0; top: 0;
+    opacity: 1;
+    width: 100%;
+  }
 }
