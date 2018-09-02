@@ -1,0 +1,78 @@
+.playground {
+  margin-top: 300px;
+
+  .playground-preview-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+
+    &.right {
+      justify-content: flex-end;
+    }
+
+    .aligner {
+      width: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .playground-preview {
+      width: 300px;
+      height: 300px;
+      position: relative; 
+  
+      .preview-image, .preview-image-solid {
+        width: 300px;
+        height: 300px;
+        position: absolute;
+        top: 0; left: 0;
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+  
+      .preview-image {
+        mix-blend-mode: color;
+      }
+  
+      .preview-image-solid {
+        opacity: 1;
+        transition: all 0.5s;
+  
+        &:hover {
+          opacity: 0.2;
+        }
+      }
+    }
+  
+    &:nth-child(3n) {
+      .preview-image {
+        
+      }
+    }
+
+    &:nth-child(3n+1) {
+      .playground-preview .preview-image {
+        mix-blend-mode: hue;
+      }
+    }
+
+    &:nth-child(3n+2) {
+      .playground-preview .preview-image {
+        mix-blend-mode: saturation;
+      }
+    }
+  }
+}
+
+
+@keyframes bouncy {
+  from {
+    top: 0;
+  }
+
+  to {
+    top: -6px;
+  }
+}

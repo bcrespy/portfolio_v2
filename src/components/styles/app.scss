@@ -1,5 +1,5 @@
 body {
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .main-container {
@@ -20,7 +20,7 @@ body {
 }
 
 .background-canvas {
-  position: absolute;
+  position: fixed;
   top: 0; left: 0;
 }
 
