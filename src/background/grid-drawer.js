@@ -136,10 +136,10 @@ class GridDrawer
 
       document.body.insertBefore( this.renderer.domElement, document.body.firstChild );
 
-      document.addEventListener( "click", () => {
+      /*document.addEventListener( "click", () => {
         this.quad.material.uniforms['front_color'].value = this.currentGreen ? new THREE.Vector3(1,1,1) : new THREE.Vector3(0,1,0);
         this.currentGreen = !this.currentGreen;
-      });
+      });*/
       
       resolve();
     });

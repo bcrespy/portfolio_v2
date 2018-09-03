@@ -1,4 +1,5 @@
 import React from 'react';
+import LoadingComponent from '../global/loading-component';
 import '../styles/home.scss';
 
 // child components 
@@ -8,7 +9,7 @@ import VisualGrid from './visual-grid';
 import { Link } from 'react-router-dom';
 
 
-class Home extends React.Component {
+class Home extends LoadingComponent {
 
   constructor( props ) {
     super(props);
@@ -26,7 +27,7 @@ class Home extends React.Component {
         </div>
 
         <Link to="/playground" className="my-work">
-          <VisualGrid cols={4} rows={4} angleX={-this.props.angleX} angleY={-this.props.angleY}/>
+          <VisualGrid cols={4} rows={4}/>
           <span className="work-link">my work</span>
         </Link>
 

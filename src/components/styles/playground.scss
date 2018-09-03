@@ -6,6 +6,10 @@
     display: flex;
     justify-content: flex-start;
 
+    &:last-child {
+      margin-bottom: 100px;
+    }
+
     &.right {
       justify-content: flex-end;
     }
@@ -74,5 +78,62 @@
 
   to {
     top: -6px;
+  }
+}
+
+
+.playground-item {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  color: #000000;
+  padding-bottom: 100px;
+
+  .go-back {
+    position: fixed;
+    bottom: 0; left: 0;
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 30px 50px 53px 74px;
+    transition: all 0.1s;
+
+    &:hover {
+      padding-left: 78px;
+    }
+  }
+
+  .playground-link {
+    position: fixed;
+    top: 50%;
+    left: 22.5%;
+    transform: translate(-50%, -50%);
+    display: block;
+    color: #000000;
+    text-decoration: none;
+    padding: 20px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    transition: transform 0.05s;
+
+    &:hover {
+      transform: translate(-55%, -55%);
+      padding: 25px 35px;
+    }
+  }
+
+  .right-part {
+    width: 55%;
+    text-align: right;
+    padding-right: 50px;
+    box-sizing: border-box;
+  }
+
+  img {
+    display: inline-block;
+    width: 100%;
   }
 }

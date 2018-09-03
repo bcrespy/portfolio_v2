@@ -9,6 +9,44 @@ import config from './config';
 
 
 
+let arrowLeftSequence = {
+  id: 'arrow-left',
+  current: 0,
+  direction: 1,
+  seq: [
+    [ [1,-4], [2,-4] ],
+    [ [0,-3], [1,-3] ],
+    [ [-1,-2], [0,-2] ],
+    [ [-2,-1], [-1,-1] ],
+    [ [-3,0], [-2,0] ],
+    [ [-2,1], [-1,1] ],
+    [ [-1,2], [0,2] ],
+    [ [0,3], [1,3] ],
+    [ [1,4], [2,4] ]
+  ],
+  position: 0 // sera remplacé programmatiquement
+};
+
+let underlinePlaygroundSequence = {
+  id: 'playground-underline',
+  current: 0,
+  direction: 1,
+  seq: [
+    [ [-6,0], [-5,0], [-4,0] ],
+    [ [-5,0], [-4,0], [-3,0] ],
+    [ [-4,0], [-3,0], [-2,0] ],
+    [ [-3,0], [-2,0], [-1,0] ],
+    [ [-2,0], [-1,0], [0,0] ],
+    [ [-1,0], [0,0], [1,0] ],
+    [ [0,0], [1,0], [2,0] ],
+    [ [1,0], [2,0], [3,0] ],
+    [ [2,0], [3,0], [4,0] ],
+    [ [3,0], [4,0], [5,0] ],
+    [ [4,0], [5,0], [6,0] ]
+  ],
+  position: 0 // same
+};
+
 class Grid 
 {
   constructor()
@@ -19,12 +57,26 @@ class Grid
 
     this.mouseIndex = 0;
 
-    this.setSize();
-
     this.frames = 0;
 
     this.mouseMoveHandler = this.mouseMoveHandler.bind(this);
     this.mouseClickHandler = this.mouseClickHandler.bind(this);
+
+    this.sequencePos = 0;
+    this.loading = false;
+
+    this.load = this.load.bind(this);
+
+    this.playground = false;
+    this.playgroundLinkPos = { x: 0, y: 0 };
+    this.underlinePos = 0;
+    this.underlineDirection = 1;
+    this.underlineSize = 12;
+
+    // utilisées pour stocker les séquences qui seront jouées
+    this.playingSequences = [];
+
+    this.setSize();
   }
 
 
@@ -41,6 +93,46 @@ class Grid
 
       resolve();
     });
+  }
+
+
+  load() {
+    this.loading = true;
+  }
+
+  loaded() {
+    this.loading = false;
+  }
+
+
+  /**
+   * Ajoute une séquence à la liste des séquence jouées
+   * @param {string} sequence l'identifiant str de la séquence 
+   */
+  playSequence( sequence ) {
+    switch( sequence ) {
+      case 'arrow-left':
+        this.playingSequences.push( arrowLeftSequence );
+        break;
+      
+      case 'playground-underline': 
+        this.playingSequences.push( underlinePlaygroundSequence );
+        break;
+    }
+  }
+
+
+  /**
+   * Permet de stopper une séquence en cours de lecture
+   * @param {str} sequence L'identifiant str de la séquence à stopper
+   */
+  stopSequence( sequence ) {
+    for( let i = 0; i < this.playingSequences.length; i++ ) {
+      if( this.playingSequences[i].id === sequence ) {
+        this.playingSequences.splice(i,1);
+        return;
+      }
+    }
   }
 
 
@@ -100,6 +192,21 @@ class Grid
   }
 
 
+  /**
+   * Lors
+   * @param {boolean} to si le mode playground doit être actif
+   */
+  playgroundLink( to = false )
+  {
+    this.playground = to;
+  }
+
+
+  /**
+   * Remet la grille à 0 et adapte la taille de cette dernière par 
+   * rapport à la fenêtre 
+   * Met aussi les autres positions relatives à la fenêtre à jour
+   */
   setSize()
   {
     let winsize = {
@@ -111,11 +218,33 @@ class Grid
     this.rows = Math.ceil( winsize.y / config.cellsize );
 
     this.data = new Uint8Array( this.cols * this.rows ).fill(0);
+
+    // la position du soulignement sur la page playground 
+    let undx = Math.floor( (winsize.x * 0.225) / config.cellsize ),
+        undy = Math.floor( (winsize.y / 2) / config.cellsize + 4 );
+    underlinePlaygroundSequence.position = undx + undy*this.cols;
+
+    // la position de la flèche précedent en bas à gauche
+    let arx = Math.floor(50/config.cellsize),
+        ary = Math.floor((winsize.y-60)/config.cellsize);
+    arrowLeftSequence.position = arx + ary*this.cols;
   }
 
   
   update()
   {
+    // si on charge 
+    if( this.loading )
+    {
+      let angle = this.sequencePos/config.loaderSequenceLength * Math.PI*2,
+          position = {
+            clientX: window.innerWidth/2 - config.loaderSize*Math.cos(angle),
+            clientY: window.innerHeight/2 - config.loaderSize * Math.sin(angle)
+          };
+      this.mouseMoveHandler(position);
+      this.sequencePos++;
+    }
+
     for( let x = 0; x < this.cols; x++ )
     {
       for( let y = 0; y < this.rows; y++ )
@@ -161,6 +290,20 @@ class Grid
         }
       }
     }
+
+    // ici on joue les séquences à jouer 
+    this.playingSequences.forEach( sequence => {
+      // on parcourt les cases de cette frame, qu'on active
+      sequence.seq[sequence.current].forEach( tile => {
+        this.data[ sequence.position + tile[0] + tile[1]*this.cols ] = 1;
+      });
+      // avancement dans la séquence 
+      if( this.frames%2 == 0 ) {
+        sequence.current+= sequence.direction;
+        if( sequence.current === 0 ) sequence.direction = 1;
+        else if( sequence.current === sequence.seq.length-1 ) sequence.direction = -1;
+      }
+    });
 
     this.frames++;
   }

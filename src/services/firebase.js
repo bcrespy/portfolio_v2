@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/auth';
 
 
 const config = {
@@ -17,6 +18,8 @@ const db = firebase.firestore();
 const settings = { timestampsInSnapshots: true };
 db.settings(settings);
 
+// authentification object
+const auth = firebase.auth();
 
 const playground = db.collection('playgrounds');
 
@@ -48,5 +51,6 @@ const getPlayground = function() {
 
 
 export default {
-  getPlayground
+  getPlayground,
+  auth
 };

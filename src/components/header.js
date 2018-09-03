@@ -38,7 +38,7 @@ class Header extends React.Component {
 
   render() {
     return (
-      <header>
+      <header className="header">
         <PageTitle angleX={this.props.angleX} angleY={this.props.angleY}/>
         <nav>
           <ul>

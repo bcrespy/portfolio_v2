@@ -12,50 +12,26 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 
+import BackgroundManager from './background/background-manager';
 import { Grid } from './background/grid';
 import { GridDrawer } from './background/grid-drawer';
 
 import service from './services/firebase';
 
+import './components/global/grid-to-mouse';
 
 
-let grid = new Grid(),
-    gridDrawer = new GridDrawer( grid );
 
-let startTimer = null,
-    lastTimer = null;
+BackgroundManager.getInstance().init().then( () => {
 
-grid.init().then( () => {
-  gridDrawer.init().then( () => {
-    startTimer = new Date();
-    lastTimer = startTimer;
-    draw();
-  });
+  ReactDOM.render((
+    <Provider store={store}>
+      <BrowserRouter>
+        <Route path='/' component={App}/>
+      </BrowserRouter>
+    </Provider>
+  ), document.getElementById('root'));
+  
+  registerServiceWorker();
+
 });
-
-
-
-function draw() 
-{
-  window.requestAnimationFrame( draw );
-
-  let now = new Date(),
-      deltaTime = now - lastTimer;
-
-  grid.update();
-  gridDrawer.draw( deltaTime );
-
-  lastTimer = now;
-}
-
-
-
-ReactDOM.render((
-  <Provider store={store}>
-    <BrowserRouter>
-      <Route path='/' component={App}/>
-    </BrowserRouter>
-  </Provider>
-), document.getElementById('root'));
-
-registerServiceWorker();

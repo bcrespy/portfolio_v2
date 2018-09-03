@@ -27,7 +27,7 @@ class VisualGrid extends React.Component {
       grid.push( row );
 
     return (
-      <div className="visual-grid" style={{gridTemplateColumns: gridProp, transform: `rotateY(${this.props.angleX}deg) rotateX(${this.props.angleY}deg)`}}>
+      <div className="visual-grid" style={{gridTemplateColumns: gridProp}}>
         {grid}
       </div>
     );

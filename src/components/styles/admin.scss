@@ -1,0 +1,82 @@
+.login {
+  width: 100%;
+  margin-top: 500px;
+  text-align: center;
+
+  input {
+    border: none;
+    background: none;
+    padding: 15px 20px;
+    width: 400px;
+    font-size: 40px;
+    outline: none;
+    text-align: center;
+    color: rgb(0,255,0);
+    font-weight: bold;
+    letter-spacing: 3px;
+
+    &.error {
+      animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      perspective: 1000px;
+    }
+  }
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+
+.admin {
+  width: 100%;
+  margin-top: 350px;
+
+  .links {
+    padding-top: 110px;
+    display: flex;
+    justify-content: center;
+
+    .link {
+      display: block;
+      width: 250px;
+      height: 250px;
+      background-color: aliceblue;
+      color: blue;
+      text-align: center;
+      text-decoration: none;
+      mix-blend-mode: color;
+      line-height: 245px;
+      font-weight: bold;
+      transition: all 0.5s;
+      margin: 15px;
+
+      &:hover {
+        background-color: magenta;
+      }
+    }
+  }
+
+  .add-interface {
+    margin-left: 250px;
+
+    textarea {
+      height: 120px;
+    }
+  }
+}
