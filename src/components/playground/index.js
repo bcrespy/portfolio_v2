@@ -17,7 +17,7 @@ import { a_PLAYGROUND_LOADED } from '../../actions.def';
 import LoadingComponent from '../global/loading-component';
 
 
-const toImageUrl = url => `/img/playground/${url}`;
+const toImageUrl = url => `/img/${url}`;
 
 const mapStateToProps = state => {
   return {

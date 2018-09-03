@@ -1,4 +1,5 @@
 import React from 'react';
+import firebase from '../../services/firebase';
 
 
 const INITIAL_STATE = {
@@ -7,9 +8,13 @@ const INITIAL_STATE = {
     link: "",
     camelName: "",
     date: "",
-    description: ""
+    description: "",
+    images: ""
   }
 }
+
+
+const postMultipleUrl = window.location.hostname === "localhost" ? "http://localhost/portfolio/ajax/multiple-images.php" : "";
 
 
 class FormGroup extends React.Component {
@@ -57,6 +62,35 @@ class AddPlayground extends React.Component {
 
   onSubmitHandler( event ) {
     event.preventDefault();
+
+    firebase.addPlayground( this.state.inputs ).then(console.log).catch(console.log);
+  }
+
+  handleMultipleFiles( event ) {
+    const formData = new FormData();
+
+    for(let size=0; size < event.target.files.length; size++){
+      let file = event.target.files[size];
+      // Do necessary request to upload here.......
+      formData.append('files[]', file);
+    }
+
+    fetch( postMultipleUrl, {
+      method: "POST", 
+      body: formData
+    }).then( response => {
+      response.json().then( data => {
+        if( data.error.length == 0 ) {
+          alert("yesai");
+          this.setState({
+            inputs: {
+              ...this.state.inputs,
+              images: data.saved.map( url => ({ url: url, alt: "nothing to see here" }))
+            }
+          })
+        }
+      });
+    })
   }
 
   setInput( name, value ) {
@@ -112,6 +146,18 @@ class AddPlayground extends React.Component {
             label="description"
             onChange={ (event, id) => { this.setInput( id, event.target.value ) } }
           />
+
+          <div className="form-group">
+            <label htmlFor="images">images</label>
+            <input
+              type="file"
+              name="files[]"
+              onChange={ (event) => { this.handleMultipleFiles(event) }}
+              multiple
+            />
+          </div>
+
+          <button>send</button>
 
         </form>
       </div>

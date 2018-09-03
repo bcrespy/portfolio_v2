@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 
-const toImageUrl = url => `/img/playground/${url}`;
+const toImageUrl = url => `/img/${url}`;
 
 
 class PlaygroundPreview extends React.Component {

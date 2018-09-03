@@ -29,6 +29,11 @@ const playground = db.collection('playgrounds');
   })
 })*/
 
+const addPlayground = (data) => {
+  return playground.doc().set({
+    ...data
+  });
+};
 
 const getPlayground = function() {
   return new Promise( (resolve, reject) => {
@@ -52,5 +57,6 @@ const getPlayground = function() {
 
 export default {
   getPlayground,
+  addPlayground,
   auth
 };

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import BackgroundManager from '../../background/background-manager';
 
 
-const toImageUrl = url => `/img/playground/${url}`;
+const toImageUrl = url => `/img/${url}`;
 
 class PlaygroundItem extends React.Component {
 
@@ -31,6 +31,9 @@ class PlaygroundItem extends React.Component {
    */
   invertFilterTo( val = 0 ) {
     document.querySelector(".background-canvas").style.filter = `invert(${val}%)`;
+    setTimeout(()=>{
+      document.querySelector("header").style.filter = `invert(${val}%)`;
+    }, 200)
   }
 
   /**

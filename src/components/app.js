@@ -52,8 +52,6 @@ class App extends Component {
   render() {
     return (
       <div className="main-container">
-        <Header/>
-
         <AnimatedSwitch
           atEnter={RouterAnimations.bounceTransition.atEnter}
           atLeave={RouterAnimations.bounceTransition.atLeave}
@@ -67,6 +65,8 @@ class App extends Component {
           <Route path="/admin" component={Admin}/>
           <Route render={ props => <Home {...props} winsize={this.state.winsize}/>}/>
         </AnimatedSwitch>
+
+        <Header/>
         
       </div>
     );
