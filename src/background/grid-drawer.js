@@ -9,6 +9,9 @@ import FilmShader from './lib/shaders/FilmShader';
 import BadTVShader from './lib/BadTVShader';
 import StaticShader from './lib/StaticShader';
 
+import Color from './lib/color-interpolate';
+
+
 
 /**
  * Cette classe dessine la grille qui est calculée par grid.js
@@ -28,6 +31,20 @@ class GridDrawer
 
     // si le mode sérieux est actif ou non 
     this.seriousMode = false;
+
+    // les paramètres de transition 
+    this.colorsTransition = {
+      background: {
+        from: new Color(0,0,0),
+        to: new Color(0,0,0)
+      },
+      foreground: {
+        from: new Color(0,0,0),
+        to: new Color(0,0,0)
+      },
+      current: 0,
+      duration: 0
+    }
 
     this.elapsedTime = 0;
   }
@@ -169,14 +186,22 @@ class GridDrawer
   {
     if( active && !this.seriousMode )
     {
-      this.quad.material.uniforms["front_color"].value = config.seriousColors.front;
-      this.quad.material.uniforms["background_color"].value = config.seriousColors.back;
+      this.colorsTransition.background.from = config.defaultColors.back;
+      this.colorsTransition.background.to = config.seriousColors.back;
+      this.colorsTransition.foreground.from = config.defaultColors.front;
+      this.colorsTransition.foreground.to = config.seriousColors.front;
+      this.colorsTransition.current = 0;
+      this.colorsTransition.duration = 250;
       this.seriousMode = true;
     }
     else if( !active && this.seriousMode )
     {
-      this.quad.material.uniforms["front_color"].value = config.defaultColors.front;
-      this.quad.material.uniforms["background_color"].value = config.defaultColors.back;
+      this.colorsTransition.background.from = config.seriousColors.back;
+      this.colorsTransition.background.to = config.defaultColors.back;
+      this.colorsTransition.foreground.from = config.seriousColors.front;
+      this.colorsTransition.foreground.to = config.defaultColors.front;
+      this.colorsTransition.current = 0;
+      this.colorsTransition.duration = 250;
       this.seriousMode = false;
     }
   }
@@ -185,6 +210,18 @@ class GridDrawer
   draw( deltaTime )
   {
     this.elapsedTime+= deltaTime;
+
+    // update des couleurs, si transition il y a 
+    if( this.colorsTransition.current < this.colorsTransition.duration ) {
+      let t = this.colorsTransition.current / this.colorsTransition.duration;
+      let foreground = this.colorsTransition.foreground.from.interpolateWith( this.colorsTransition.foreground.to, t ),
+          background = this.colorsTransition.background.from.interpolateWith( this.colorsTransition.background.to, t );
+      
+      this.quad.material.uniforms["front_color"].value = foreground.convert(THREE.Vector3, x => x/255);
+      this.quad.material.uniforms["background_color"].value = background.convert(THREE.Vector3, x => x/255);
+
+      this.colorsTransition.current+= deltaTime;
+    }
 
     // update des passes
     //this.badTVPass.material.uniforms[ 'time' ].value = 0.1*Math.cos(this.elapsedTime/1000);

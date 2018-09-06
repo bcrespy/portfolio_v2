@@ -1,6 +1,8 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import BackgroundManager from '../../background/background-manager';
+import { nl2br } from '../../helpers/helpers';
 
 
 const toImageUrl = url => `/img/${url}`;
@@ -16,12 +18,21 @@ class PlaygroundItem extends React.Component {
   }
 
   componentWillMount() {
+    window.scrollTo(0, 0);
+
     // dans le cas où on arrive sur la page par l'url, on prépare le bg
     this.setBackgroundEffects(true);
+
+    this.unlisten = this.props.history.listen( (location, action ) => {
+      if( !/playground/.test(location.pathname) ) {
+        this.setBackgroundEffects(false);
+      }
+      this.unlisten();
+    });
   }
 
   componentWillUnmount() {
-    this.setBackgroundEffects(false);
+    
   }
 
   /**
@@ -76,7 +87,7 @@ class PlaygroundItem extends React.Component {
           <div className="right-part">
             <h2 className="title">{this.props.item.title}</h2>
             <img src={toImageUrl(this.props.item.images[0].url)} alt={this.props.item.images[0].alt} />
-            <p dangerouslySetInnerHTML={ { __html: this.props.item.description } }></p>
+            <p dangerouslySetInnerHTML={ { __html: nl2br(this.props.item.description) } }></p>
             <div className="images">
             {
               shortenedImages.map( (image, idx) => (
@@ -93,4 +104,4 @@ class PlaygroundItem extends React.Component {
 }
 
 
-export default PlaygroundItem;
+export default withRouter(PlaygroundItem);

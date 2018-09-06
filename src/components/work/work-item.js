@@ -1,14 +1,6 @@
 import React from 'react';
 import LazyImage from '../global/lazy-image';
-
-
-function nl2br (str, is_xhtml) {
-  if (typeof str === 'undefined' || str === null) {
-      return '';
-  }
-  var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
-  return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
-}
+import { nl2br } from '../../helpers/helpers';
 
 const toImageUrl = url => `/img/${url}`;
 

@@ -1,4 +1,4 @@
-import { Vector3 } from 'three';
+import Color from './lib/color-interpolate';
 import { mobilecheck } from '../helpers/helpers';
 
 
@@ -12,13 +12,13 @@ export default {
   loaderSequenceLength: 25,
 
   defaultColors: {
-    front: new Vector3(1,1,1),
-    back: new Vector3(0,0,1)
+    front: new Color(255,255,255),
+    back: new Color(0,0,255)
   },
 
   seriousColors: {
-    front: new Vector3(0,0,0),
-    back: new Vector3(1,1,1)
+    front: new Color(0,0,0),
+    back: new Color(255,255,255)
   }
 
 }
