@@ -12,9 +12,9 @@ import StaticShader from './lib/StaticShader';
 
 /**
  * Cette classe dessine la grille qui est calculée par grid.js
+ * La grille est transférée comme un texture à la carte graphique qui
+ * l'affichera avec certaines modifications 
  */
-
-
 class GridDrawer 
 {
   /**
@@ -25,6 +25,9 @@ class GridDrawer
   {
     //this.canvas = new Canvas("main-canvas", true);
     this.grid = grid;
+
+    // si le mode sérieux est actif ou non 
+    this.seriousMode = false;
 
     this.elapsedTime = 0;
   }
@@ -155,6 +158,27 @@ class GridDrawer
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize( window.innerWidth, window.innerHeight );
+  }
+
+
+  /**
+   * Permet d'activer le mode sérieux (blanc/noir)
+   * @param {boolean} active si le mode doit être actif
+   */
+  setSeriousMode( active ) 
+  {
+    if( active && !this.seriousMode )
+    {
+      this.quad.material.uniforms["front_color"].value = config.seriousColors.front;
+      this.quad.material.uniforms["background_color"].value = config.seriousColors.back;
+      this.seriousMode = true;
+    }
+    else if( !active && this.seriousMode )
+    {
+      this.quad.material.uniforms["front_color"].value = config.defaultColors.front;
+      this.quad.material.uniforms["background_color"].value = config.defaultColors.back;
+      this.seriousMode = false;
+    }
   }
 
 

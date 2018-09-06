@@ -83,6 +83,10 @@ class BackgroundManager {
   stopSequence( sequence ) {
     this.grid.stopSequence( sequence );
   }
+
+  setSeriousMode( active = false ) {
+    this.gridDrawer.setSeriousMode( active );
+  }
 }
 
 

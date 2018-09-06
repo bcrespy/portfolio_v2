@@ -22,6 +22,7 @@ db.settings(settings);
 const auth = firebase.auth();
 
 const playground = db.collection('playgrounds');
+const work = db.collection('works');
 
 /*playground.get().then( querySnapshot => {
   querySnapshot.forEach( document => {
@@ -37,7 +38,7 @@ const addPlayground = (data) => {
 
 const getPlayground = function() {
   return new Promise( (resolve, reject) => {
-    playground.get().then(querySnapshot => {
+    playground.orderBy("added", "desc").get().then(querySnapshot => {
         
         let payload = [];
 
@@ -54,9 +55,40 @@ const getPlayground = function() {
   });
 }
 
+/**
+ * Permet d'ajouter un travail à la collection
+ * @param {object} data le travail à ajouter à la liste
+ */
+const addWork = data => {
+  return work.doc().set({...data});
+}
+
+/**
+ * Récupère la liste des travaux dans la collection 
+ */
+const getWork = () => {
+  return new Promise( (resolve, reject) => {
+    work.orderBy("added", "desc").get().then( querySnapshot => {
+      let payload = [];
+
+      querySnapshot.forEach( document => {
+        payload.push({
+          ...document.data(),
+          id: document.id
+        });
+      });
+
+      resolve( payload );
+
+    }).catch(reject);
+  });
+}
+
 
 export default {
   getPlayground,
   addPlayground,
+  getWork,
+  addWork,
   auth
 };

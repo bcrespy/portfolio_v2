@@ -1,5 +1,6 @@
 import React from 'react';
 import firebase from '../../services/firebase';
+import FormGroup from '../global/form-group';
 
 
 const INITIAL_STATE = {
@@ -9,45 +10,13 @@ const INITIAL_STATE = {
     camelName: "",
     date: "",
     description: "",
-    images: ""
+    images: []
   }
 }
 
 
 const postMultipleUrl = window.location.hostname === "localhost" ? "http://localhost/portfolio/ajax/multiple-images.php" : "";
 
-
-class FormGroup extends React.Component {
-  constructor( props ) {
-    super( props );
-  }
-
-  render() {
-    return (
-      <div className="form-group">
-        <label htmlFor={this.props.id}>{this.props.label}</label>
-        
-        {(this.props.type == "text") && 
-          <input 
-            type={this.props.type}
-            onChange={event => { this.props.onChange(event, this.props.id) }}
-            value={ this.props.value }
-            id={this.props.id}
-          />
-        }
-
-        {(this.props.type == "textarea") && 
-          <textarea 
-            type={this.props.type}
-            onChange={event => { this.props.onChange(event, this.props.id) }}
-            value={ this.props.value }
-            id={this.props.id}
-          />
-        }
-      </div>
-    )
-  }
-}
 
 
 class AddPlayground extends React.Component {
@@ -63,7 +32,7 @@ class AddPlayground extends React.Component {
   onSubmitHandler( event ) {
     event.preventDefault();
 
-    firebase.addPlayground( this.state.inputs ).then(console.log).catch(console.log);
+    firebase.addPlayground( {...this.state.inputs, added: new Date() } ).then(console.log).catch(console.log);
   }
 
   handleMultipleFiles( event ) {

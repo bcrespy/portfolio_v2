@@ -6,6 +6,8 @@ import './styles/app.scss';
 import Header from './header';
 import Home from './home/index';
 import Playground from './playground/index';
+import Work from './work/index';
+import Contact from './contact/index';
 import Admin from './admin/login';
 
 // routing 
@@ -62,7 +64,9 @@ class App extends Component {
           <Route exact path="/" render={ props => <Home {...props} winsize={this.state.winsize}/>}/>
           <Route path="/home" render={ props => <Home {...props} winsize={this.state.winsize}/>}/>
           <Route path="/playground" component={Playground}/>
+          <Route path="/work" component={Work} />
           <Route path="/admin" component={Admin}/>
+          <Route path="/contact" component={Contact}/>
           <Route render={ props => <Home {...props} winsize={this.state.winsize}/>}/>
         </AnimatedSwitch>
 

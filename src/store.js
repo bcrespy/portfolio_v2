@@ -3,10 +3,9 @@ import { promiseMiddleware } from './middleware';
 import reducer from './reducer';
 
 
-const store = createStore( reducer, compose(
+const store = createStore( reducer,
   applyMiddleware(promiseMiddleware),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-));
+);
 
 
 export default store;

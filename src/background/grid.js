@@ -6,47 +6,17 @@
 
 
 import config from './config';
+import { arrowLeftSequence, underlinePlaygroundSequence, line } from './sequences';
 
 
 
-let arrowLeftSequence = {
-  id: 'arrow-left',
-  current: 0,
-  direction: 1,
-  seq: [
-    [ [1,-4], [2,-4] ],
-    [ [0,-3], [1,-3] ],
-    [ [-1,-2], [0,-2] ],
-    [ [-2,-1], [-1,-1] ],
-    [ [-3,0], [-2,0] ],
-    [ [-2,1], [-1,1] ],
-    [ [-1,2], [0,2] ],
-    [ [0,3], [1,3] ],
-    [ [1,4], [2,4] ]
-  ],
-  position: 0 // sera remplacé programmatiquement
-};
 
-let underlinePlaygroundSequence = {
-  id: 'playground-underline',
-  current: 0,
-  direction: 1,
-  seq: [
-    [ [-6,0], [-5,0], [-4,0] ],
-    [ [-5,0], [-4,0], [-3,0] ],
-    [ [-4,0], [-3,0], [-2,0] ],
-    [ [-3,0], [-2,0], [-1,0] ],
-    [ [-2,0], [-1,0], [0,0] ],
-    [ [-1,0], [0,0], [1,0] ],
-    [ [0,0], [1,0], [2,0] ],
-    [ [1,0], [2,0], [3,0] ],
-    [ [2,0], [3,0], [4,0] ],
-    [ [3,0], [4,0], [5,0] ],
-    [ [4,0], [5,0], [6,0] ]
-  ],
-  position: 0 // same
-};
-
+/**
+ * La grille gère les carrés qui sont actifs ou non, elle s'actualise 
+ * à chaque frame pour appliquer les règles du jeu de la vie, légèrement modifié 
+ * Cette classe ne gère pas le dessin, elle stocke et modifie simplement les
+ * informations sur les carrés de la grille
+ */
 class Grid 
 {
   constructor()
@@ -66,12 +36,6 @@ class Grid
     this.loading = false;
 
     this.load = this.load.bind(this);
-
-    this.playground = false;
-    this.playgroundLinkPos = { x: 0, y: 0 };
-    this.underlinePos = 0;
-    this.underlineDirection = 1;
-    this.underlineSize = 12;
 
     // utilisées pour stocker les séquences qui seront jouées
     this.playingSequences = [];
@@ -117,6 +81,10 @@ class Grid
       
       case 'playground-underline': 
         this.playingSequences.push( underlinePlaygroundSequence );
+        break;
+
+      case 'line': 
+        this.playingSequences.push( line );
         break;
     }
   }
@@ -189,16 +157,6 @@ class Grid
   posToIndex( x, y )
   {
     return Math.floor( x / config.cellsize ) + this.cols * Math.floor( y / config.cellsize );
-  }
-
-
-  /**
-   * Lors
-   * @param {boolean} to si le mode playground doit être actif
-   */
-  playgroundLink( to = false )
-  {
-    this.playground = to;
   }
 
 

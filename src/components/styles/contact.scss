@@ -1,0 +1,81 @@
+.contact {
+  margin-top: 350px;
+  text-align: center;
+  margin-bottom: 150px;
+
+  .infos {
+    width: 801px;
+    text-align: left;
+    margin-bottom: 40px;
+    display: inline-block;
+    padding-left: 165px;
+    box-sizing: border-box;
+
+    .strong {
+      font-weight: bold;
+    }
+
+    .phone {
+      letter-spacing: 2px;
+      display: inline-block;
+      margin-bottom: 5px;
+    }
+  }
+
+  .alert-infos {
+    width: 801px;
+    padding: 0;
+    box-sizing: border-box;
+    display: inline-block;
+    border: 2px solid white;
+    color: white;
+    transition: all 0.5s;
+    margin-bottom: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+
+    &.alert-error {
+      border-color: salmon;
+      color: salmon;
+    }
+
+    &.alert-success {
+      border-color: rgb(0,255,0);
+      color: rgb(0,255,0);
+    }
+
+    &.active {
+      height: 85px;
+      opacity: 1;
+      margin-bottom: 20px;
+      padding: 15px 20px;
+    }
+  }
+
+  form.generic {
+    display: inline-block;
+
+    .form-group {
+      label {
+        text-align: right;
+        padding-right: 15px;
+      }
+      input, textarea {
+        width: 600px;
+      }
+
+      textarea {
+        height: 200px;
+        max-width: 600px;
+        min-width: 600px;
+        min-height: 150px;
+      }
+    }
+
+    button {
+      margin-left: 0;
+      float: right;
+    }
+  }
+}

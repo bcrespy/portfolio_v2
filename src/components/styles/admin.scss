@@ -74,9 +74,31 @@
 
   .add-interface {
     margin-left: 250px;
+    margin-bottom: 100px;
 
     textarea {
       height: 120px;
+    }
+
+    .form-image {
+      margin-top: 50px;
+
+      .image-infos {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+  
+        img {
+          width: 135px;
+          margin-right: 15px;
+        }
+
+        .title {
+          color: magenta;
+          display: block;
+          font-weight: bold;
+        }
+      }
     }
   }
 }
