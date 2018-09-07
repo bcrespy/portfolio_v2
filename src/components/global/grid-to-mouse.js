@@ -4,11 +4,12 @@
  * inutiles 
  */
 
-document.addEventListener( "mousemove", event => {
+
+export default function gridsFromPos( x, y ) {
 
   // calcul de l'angle des grilles 
-  let angleX = -25 * (event.clientX - window.innerWidth/2) / (window.innerWidth/2),
-      angleY = 25* (event.clientY - window.innerHeight/2) / (window.innerHeight/2);
+  let angleX = -25 * (x - window.innerWidth/2) / (window.innerWidth/2),
+      angleY = 25* (y - window.innerHeight/2) / (window.innerHeight/2);
 
   let grids = document.querySelectorAll('.visual-grid');
   
@@ -16,4 +17,4 @@ document.addEventListener( "mousemove", event => {
     grid.style.transform = `rotateY(${angleX}deg) rotateX(${angleY}deg)`;
   });
 
-});
+}

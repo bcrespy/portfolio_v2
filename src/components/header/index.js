@@ -1,7 +1,7 @@
 import React from 'react';
-import './styles/header.scss';
+import '../styles/header.scss';
 
-import PageTitle from './global/page-title';
+import PageTitle from '../global/page-title';
 
 import { Link } from 'react-router-dom';
 

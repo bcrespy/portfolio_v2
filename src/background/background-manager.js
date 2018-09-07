@@ -52,6 +52,13 @@ class BackgroundManager {
     });
   }
 
+  drawOnGrid( position ) {
+    this.grid.mouseMoveHandler({
+      clientX: position.x,
+      clientY: position.y
+    });
+  }
+
   draw() {
     window.requestAnimationFrame( this.draw );
 

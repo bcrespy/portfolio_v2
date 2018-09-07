@@ -18,8 +18,12 @@ import { GridDrawer } from './background/grid-drawer';
 
 import service from './services/firebase';
 
-import './components/global/grid-to-mouse';
+import gridsFromPos from './components/global/grid-to-mouse';
 
+
+document.addEventListener( "mousemove", event => {
+  gridsFromPos( event.clientX, event.clientY );
+});
 
 
 BackgroundManager.getInstance().init().then( () => {

@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './styles/app.scss';
 
 // child components
-import Header from './header';
+import Header from './header/index';
 import Home from './home/index';
 import Playground from './playground/index';
 import Work from './work/index';
@@ -18,6 +18,8 @@ import RouterAnimations from './router-animations';
 // for loading 
 import BackgroundManager from '../background/background-manager';
 
+import gridsFromPos from './global/grid-to-mouse';
+
 
 
 class App extends Component {
@@ -25,6 +27,7 @@ class App extends Component {
     super( props );
 
     this.handleResize = this.handleResize.bind(this);
+    this.handleTouchMove = this.handleTouchMove.bind(this);
 
     this.state = {
       winsize: { x: 0, y: 0 },
@@ -42,6 +45,17 @@ class App extends Component {
     })
   }
 
+  handleTouchMove( event ) {
+    for( let i = 0; i < event.touches.length; i++ ) {
+      let touch = event.touches[i];
+      BackgroundManager.getInstance().drawOnGrid({
+        x: touch.clientX,
+        y: touch.clientY
+      });
+      gridsFromPos(touch.clientX, touch.clientY);
+    }
+  }
+
   componentDidMount() {
     this.handleResize();
     window.addEventListener( "resize", this.handleResize );
@@ -53,7 +67,8 @@ class App extends Component {
 
   render() {
     return (
-      <div className="main-container">
+      <div className="main-container" onTouchMove={this.handleTouchMove}>
+
         <AnimatedSwitch
           atEnter={RouterAnimations.bounceTransition.atEnter}
           atLeave={RouterAnimations.bounceTransition.atLeave}

@@ -30,8 +30,6 @@ class Contact extends React.Component {
   onSubmitHandler( event ) {
     event.preventDefault();
 
-    console.log( POST_MAIL );
-
     let formData = new FormData();
     formData.append("name", this.state.name);
     formData.append("object", this.state.object);
